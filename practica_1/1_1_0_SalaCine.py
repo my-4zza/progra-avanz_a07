@@ -2,7 +2,7 @@
 #Autor:Jimmy
 #Modificador:Jose Santiago Alegria Ponce
 #Fecha 3/10/2026
-#Versión 1.0.1
+#Versión 1.1.0
 #Se agrego un bucle if para que no se puedan poner filas o columnas no permitidas 
 import sys
 def principal():
