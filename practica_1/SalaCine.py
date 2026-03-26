@@ -1,29 +1,37 @@
-#include <stdio.h>
-//Programa sala de cine
-//autor: Santiago
-// modificador: Alfredo
-// versión 1.0.1
-// se agrego sala++ para evitar un bucle infinito
-int main(){
-    int multiarreglo[5][4]={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16},{17,18,19,20}};
-    int fila, columna, sala=0;
-    int x,y;
-    while(sala < 20){
-        for( x=0; x<5; x++){
-            for(y=0; y<4; y++){
-                printf(" %i", multiarreglo[x][y]);
-            }
-            printf("\n");
-        }
-        printf("Escoje el asiento (Fila 1-5, Columna 1-4): \n");
-        scanf("%i %i", &fila, &columna);
-        fila = fila - 1; 
-        columna = columna - 1;
-        if (fila >= 0 && fila < 5 && columna >= 0 && columna < 4) {
-            multiarreglo[fila][columna] = 0;
-            sala++; 
-        } else {
-            printf("Error: Coordenadas invalidas.\n");
-        }
-    }
-}
+#Programa sala de cines
+#Autor:Jimmy
+#Modificador:Alfredo
+#Versión 1.0.1
+#Se agrego sala += 1 para que no se haga un bucle
+def principal():
+    multiarreglo = [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 16],
+        [17, 18, 19, 20]
+    ]
+    
+    sala = 0 
+    
+    while sala < 20:
+        for incognita in range(5):
+            for y in range(4):
+                print(f" {multiarreglo[incognita][y]:2}", end="")
+            print("")
+        
+        print("\nEscoge el asiento")
+        print("Escribe la fila (0-4) y columna (0-3)")
+        
+        fila = int(input("Fila: "))
+        columna = int(input("Columna: "))
+        if multiarreglo[fila][columna] != 0:
+            multiarreglo[fila][columna] = 0
+            sala += 1 
+            print("--- Asiento reservado con éxito ---\n")
+        else:
+            print("--- Ese asiento ya está ocupado ---\n")
+
+if __name__ == "__main__":
+    principal()
+
