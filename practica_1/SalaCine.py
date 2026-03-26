@@ -1,5 +1,11 @@
+#Programa sala de cines
+#Autor:Jimmy
+#Modificador:Jose Santiago Alegria Ponce
+#Fecha 3/10/2026
+#Versión 1.1.0
+#Se agrego un bucle if para que no se puedan poner filas o columnas no permitidas 
+import sys
 def principal():
-
     multiarreglo = [
         [1, 2, 3, 4],
         [5, 6, 7, 8],
@@ -8,24 +14,31 @@ def principal():
         [17, 18, 19, 20]
     ]
     
-    sala = 0
+    sala = 0 
     
     while sala < 20:
-
         for incognita in range(5):
             for y in range(4):
-
-                print(f" {multiarreglo[incognita][y]}", end="")
- 
-            print("\n")
+                print(f" {multiarreglo[incognita][y]:2}", end="")
+            print("")
         
-        print("escoje el asiento")
-        print("escribe la fila y columna")
-        
+        print("\nEscoge el asiento")
+        print("Escribe la fila (0-3) y columna (0-3)")
         fila = int(input("Fila: "))
         columna = int(input("Columna: "))
-        
-        multiarreglo[fila][columna] = 0
+        if fila>=4 or columna>=4:
+            print("Fuera del limite ")
+            sys.exit()
+        else:
+            if multiarreglo[fila][columna] != 0:
+                multiarreglo[fila][columna] = 0
+                sala += 1 
+                print("--- Asiento reservado con éxito ---\n")
+            else:
+                print("--- Ese asiento ya está ocupado ---\n")
+            
+            
+      
 
 if __name__ == "__main__":
     principal()
