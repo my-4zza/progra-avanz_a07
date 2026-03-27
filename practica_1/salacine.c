@@ -1,16 +1,12 @@
-//#Autor:Jose Santiago Alegria Ponce
-//#Modificador: Hernandez Garcia Juan Carlos 
-//#Fecha 26/marzo/2026
-//#Versión 1.2.1
-//En la dulcería usé %-42s para que los precios queden perfectamente alineados en una columna, sin importar el largo del nombre del combo.
-//Sistema de Abonos: En lugar de cancelar la compra si falta dinero, el sistema ahora te permite seguir "metiendo monedas" hasta completar el pago.
-//Pre-visualización: El mapa ahora muestra claramente qué número es la fila y cuál es la columna, reduciendo errores del usuario.
+//#Autor: Jose Santiago Alegria Ponce
+//#Modificador: Antonio De Jesus Portilla Duran
+//#Fecha: 27/marzo/2026
+//#Versión: 2.0.0
+//Mapa con filas A-E y símbolos . y X  para mejor lectura
+//Se integró la Taquilla y Dulcería en un solo pago final
+//Ahora permite comprar múltiples combos en la misma sesión
+ //Limpieza de pantalla para mantener la consola ordenada
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-
-// --- ESTRUCTURAS ---
 struct Combo {
     char nombre[50];
     float precio;
@@ -18,124 +14,141 @@ struct Combo {
 
 // --- PROTOTIPOS ---
 void limpiar_buffer();
+void limpiar_pantalla();
 void imprimir_sala(int sala[5][4]);
-void comprar_combo();
+float seleccionar_dulces();
+void procesar_pago(float total);
 
 // --- FUNCIONES ---
-
 void limpiar_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+void limpiar_pantalla() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 void imprimir_sala(int sala[5][4]) {
-    printf("\n      --- MAPA DE LA SALA ---\n");
-    printf("      Col:  0   1   2   3\n"); // Guía de columnas
-    printf("     --------------------\n");
+    printf("\n      Pantalla de cine \n");
+    printf("        Col:  0   1   2   3\n");
+    printf("       ---------------------\n");
     for (int i = 0; i < 5; i++) {
-        printf("Fila %d |", i); // Guía de filas
+        printf("Fila %c |", 'A' + i); // Imprime A, B, C, D, E
         for (int j = 0; j < 4; j++) {
-            if (sala[i][j] == 0) {
-                printf("  X "); 
-            } else {
-                printf("%3d ", sala[i][j]);
-            }
+            if (sala[i][j] == 0) printf("  X ");
+            else printf("  . ");
         }
-        printf("\n");
+        printf(" |\n");
     }
-    printf("     --------------------\n");
+    printf("       ---------------------\n");
+    printf("      ( . = Libre, X = Ocupado )\n");
 }
 
-void comprar_combo() {
+float seleccionar_dulces() {
     struct Combo combos[3] = {
-        {"Combo Individual (Palomitas + Refresco)", 150.0},
-        {"Combo Pareja (2 Refrescos + Palomitas G)", 280.0},
-        {"Combo Familiar (4 Refrescos + 2 Palomitas G)", 450.0}
+        {"Combo Individual", 150.0},
+        {"Combo Pareja", 280.0},
+        {"Combo Familiar", 450.0}
     };
+    int opcion, cant;
+    float subtotal = 0;
 
-    printf("\n--- DULCERÍA (v1.2.1) ---\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%d. %-42s $%.2f\n", i + 1, combos[i].nombre, combos[i].precio);
-    }
-    printf("0. Saltar dulcería\n");
-
-    int opcion;
-    printf("\nSelecciona tu combo: ");
-    if (scanf("%d", &opcion) != 1) {
-        limpiar_buffer();
-        printf("Opción inválida. Volviendo a la sala...\n");
-        return;
-    }
-
-    if (opcion == 0) return;
-
-    if (opcion >= 1 && opcion <= 3) {
-        float precio = combos[opcion - 1].precio;
-        float pago = 0;
-
-        printf("Total: $%.2f\n", precio);
-        
-        // Lógica de pago mejorada (v1.2.1)
-        while (pago < precio) {
-            float abono;
-            printf("Ingrese pago (Faltan $%.2f): $", precio - pago);
-            if (scanf("%f", &abono) != 1) {
-                limpiar_buffer();
-                printf("Error en moneda. Reintente.\n");
-                continue;
-            }
-            pago += abono;
-            
-            if (pago < precio) {
-                printf("Aún no es suficiente.\n");
-            }
+    while (1) {
+        printf("\n--- DULCERIA ---\n");
+        for (int i = 0; i < 3; i++) {
+            printf("%d. %-20s $%.2f\n", i + 1, combos[i].nombre, combos[i].precio);
         }
+        printf("0. Finalizar seleccion\n");
+        printf("Seleccion: ");
 
-        printf("¡Pago exitoso! Su cambio: $%.2f\n", pago - precio);
-        printf("Disfrute sus productos.\n\n");
-    } else {
-        printf("Opción no válida.\n");
-    }
-}
-
-int main() {
-    int sala_asientos[5][4] = {
-        {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, 
-        {13, 14, 15, 16}, {17, 18, 19, 20}
-    };
-
-    int ocupados = 0;
-    int fila, columna;
-
-    printf("BIENVENIDO AL SISTEMA DE CINE v1.2.1\n");
-
-    while (ocupados < 20) {
-        imprimir_sala(sala_asientos);
-
-        printf("\nSelección de Asiento:\n");
-        printf("Ingrese Fila (0-4) y Columna (0-3) separados por espacio: ");
-        
-        if (scanf("%d %d", &fila, &columna) != 2) {
-            printf("\n[!] Error: Ingrese números válidos.\n");
+        if (scanf("%d", &opcion) != 1) {
             limpiar_buffer();
             continue;
         }
+        if (opcion == 0) break;
+        if (opcion >= 1 && opcion <= 3) {
+            printf("Cuantos?: ");
+            scanf("%d", &cant);
+            subtotal += combos[opcion - 1].precio * cant;
+            printf("Subtotal actual: $%.2f\n", subtotal);
+        }
+    }
+    limpiar_buffer();
+    return subtotal;
+}
 
-        if (fila >= 0 && fila < 5 && columna >= 0 && columna < 4) {
-            if (sala_asientos[fila][columna] == 0) {
-                printf("\n[!] El asiento [%d,%d] ya está ocupado. Elija otro.\n", fila, columna);
+void procesar_pago(float total) {
+    float pago_acumulado = 0, abono;
+    printf("\n--- Proceso de pago ---\n");
+    printf("Total a pagar: $%.2f\n", total);
+
+    while (pago_acumulado < total) {
+        printf("Ingrese pago (Faltan $%.2f): $", total - pago_acumulado);
+        if (scanf("%f", &abono) != 1) {
+            limpiar_buffer();
+            printf("[!] Moneda no valida.\n");
+            continue;
+        }
+        pago_acumulado += abono;
+    }
+    printf("Pago exitoso Su cambio: $%.2f\n", pago_acumulado - total);
+    printf("Presione Enter para continuar");
+    limpiar_buffer();
+    getchar();
+}
+
+int main() {
+    int sala[5][4];
+    for(int i=0; i<5; i++) for(int j=0; j<4; j++) sala[i][j] = 1;
+
+    int ocupados = 0;
+    char fila_letra;
+    int col, fila_idx;
+
+    while (ocupados < 20) {
+        limpiar_pantalla();
+        printf("Sistema de cine v2.0.0\n");
+        imprimir_sala(sala);
+
+        printf("\nReserva (Ejemplo: A 2) o 'S' para salir: ");
+        char entrada[50];
+        fgets(entrada, sizeof(entrada), stdin);
+
+        if (toupper(entrada[0]) == 'S') break;
+
+        if (sscanf(entrada, "%c %d", &fila_letra, &col) == 2) {
+            fila_idx = toupper(fila_letra) - 'A';
+
+            if (fila_idx >= 0 && fila_idx < 5 && col >= 0 && col < 4) {
+                if (sala[fila_idx][col] == 0) {
+                    printf("\n[!] Asiento ocupado. Presione Enter");
+                    getchar();
+                } else {
+                    sala[fila_idx][col] = 0;
+                    ocupados++;
+
+                    float t_dulces = seleccionar_dulces();
+                    float t_boleto = 65.0;
+
+                    limpiar_pantalla();
+                    printf("\n Resumen de compra \n");
+                    printf("Asiento %c%d: $%.2f\n", toupper(fila_letra), col, t_boleto);
+                    printf("Dulceria:    $%.2f\n", t_dulces);
+                    printf("-------------------------\n");
+                    procesar_pago(t_boleto + t_dulces);
+                }
             } else {
-                sala_asientos[fila][columna] = 0;
-                ocupados++;
-                printf("\n--- Asiento [%d,%d] reservado con éxito ---\n", fila, columna);
-                
-                comprar_combo();
+                printf("\n[!] Coordenadas invalidas. Presione Enter");
+                getchar();
             }
-        } else {
-            printf("\n[!] Coordenadas fuera de rango.\n");
         }
     }
 
-    printf("\nSALA LLENA. No hay más asientos disponibles.\n");
+    printf("\nGracias por usar el sistema v2.0.0\n");
     return 0;
 }
