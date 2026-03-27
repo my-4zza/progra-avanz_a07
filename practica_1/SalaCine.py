@@ -1,10 +1,10 @@
 #Autor:Jimmy
-#Modificador:Jose Santiago Alegria Ponce
+#Modificador:Azael Pérez González
 #Fecha 26/marzo/2026
-#Versión 1.2.0
-#Se agrego un sistema completo de dulceria despues de hacer la compra de boleto
-#consiste en un nuevo arreglo como el de los asientos 
-#integra sistema de compra y cambio 
+#Versión 1.3.0
+#Añade un menú principal con flujo realista (asiento -> dulcería).
+#Implementa un cobro unificado (boleto de $65 + combo) y cancela la compra liberando el asiento si el pago es insuficiente.
+#Mejora visual marcando los lugares ocupados con [X].
 
 def comprar_combo():
     print("--- DULCERÍA ---")
