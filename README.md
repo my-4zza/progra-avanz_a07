@@ -1,11 +1,19 @@
-# progra-avanz_a07
-# Experiencia Educativa: Programación Avanzada
+## EXPERIENCIA EDUCATIVA: PROGRAMACIÓN AVANZADA
+**Universidad Veracruzana**
+Repositorio de equipo utilizado para almacenar las prácticas y proyectos del curso. El objetivo principal es aplicar control de versiones colaborativo usando GitHub, versionado semántico y desarrollo de programas en C y Python.
 
-Repositorio del equipo para las prácticas del curso. Enfocado en la colaboración mediante GitHub, versionado semántico y desarrollo de programas en C y Python.
+**Docente:** José Alfonso Dominguez Chavez
 
-### Equipo:
-* ALARCÓN GALVÁN JIMMY LOUCIOSS
-* ALEGRÍA PONCE JOSÉ SANTIAGO
-* CID GARCÍA ALFREDO
-* PÉREZ GONZÁLEZ AZAEL
-* PORTILLA DURÁN ANTONIO DE JESÚS
+## Integrantes del Proyecto
+
+| Nombre del Integrante | Rol de Trabajo | Contacto (Matrícula y Correo) |
+| :--- | :--- | :--- |
+| **Azael Pérez González** | Representante | Matricula: zs24013146 - [zs24013146@estudiantes.uv.mx](mailto:zs24013146@estudiantes.uv.mx) |
+| **José Santiago Alegría Ponce** | Sub representante y ayudante general | Matricula: zs24013141 - [zs24013141@estudiantes.uv.mx](mailto:zs24013141@estudiantes.uv.mx) |
+| **Juan Carlos Hernández García** | Programador | Matricula: zs24013178 - [zs24013178@estudiantes.uv.mx](mailto:zs24013178@estudiantes.uv.mx) |
+| **Alfredo Cid García** | Programador | Matricula: zs24013120 - [zs24013120@estudiantes.uv.mx](mailto:zs24013120@estudiantes.uv.mx) |
+| **Antonio De Jesus Portilla Durán** | Encargado de hardware | Matricula: zs24013166 - [zs24013166@estudiantes.uv.mx](mailto:zs24013166@estudiantes.uv.mx) |
+| **Jimmy Loucioss Alarcon Galván** | Encargado de hardware | Matricula: zs24013200 - [zs24013200@estudiantes.uv.mx](mailto:zs24013200@estudiantes.uv.mx) |
+
+## Índice de Prácticas
+* [Práctica 1: Versionado Semántico y Programas Simples en C/Python](./practica_1/)
