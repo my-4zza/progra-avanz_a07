@@ -1,5 +1,5 @@
 ## EXPERIENCIA EDUCATIVA: PROGRAMACIÓN AVANZADA
-**Universidad Veracruzana**
+## **Universidad Veracruzana**
 Repositorio de equipo utilizado para almacenar las prácticas y proyectos del curso. El objetivo principal es aplicar control de versiones colaborativo usando GitHub, versionado semántico y desarrollo de programas en C y Python.
 
 **Docente:** José Alfonso Dominguez Chavez
